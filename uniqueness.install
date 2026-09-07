@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the uniqueness module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function uniqueness_install() {
+  $config = config('uniqueness.settings');
+  $config->setData(array(
+    'uniqueness_search_mode' => UNIQUENESS_SEARCH_MODE_NODETITLE,
+    'uniqueness_scope' => UNIQUENESS_SCOPE_CONTENT_TYPE,
+    'uniqueness_results_max' => 10,
+    'uniqueness_query_min' => 3,
+    'uniqueness_widgets' => array(UNIQUENESS_WIDGET_INLINE),
+    'uniqueness_default_title' => t('Related content'),
+    'uniqueness_default_description' => t("Help us avoid duplicate content! If we find content that's related or similar to what you're posting it will be listed here."),
+    'uniqueness_searching_string' => t('Searching&hellip;'),
+    'uniqueness_no_result_string' => t('Success! No related content found.'),
+    'uniqueness_results_prepend' => 0,
+    'content_types' => array(),
+  ));
+  $config->save();
+  backdrop_set_message(t("Uniqueness settings are available under !link.",
+    array('!link' => l(t('Administer > Site configuration > Uniqueness'), 'admin/config/content/uniqueness'))
+  ));
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function uniqueness_uninstall() {
+  config('uniqueness.settings')->delete();
+}

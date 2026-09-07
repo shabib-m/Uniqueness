@@ -1,0 +1,5 @@
+name = uniqueness
+description = Show similar content during node submission to avoid duplicate content.
+type = module
+backdrop = 1.x
+configure = admin/config/content/uniqueness
